@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "API for TNike-client with typescript",
+  "main": "index.js",
+  "repository": "https://github.com/tuanpham24/TNike-server.git",
+  "author": "Tunn",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./index.ts",
+    "build": "rm -rf build/ && prettier --write src/ && tsc"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.16",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.9.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.1",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
