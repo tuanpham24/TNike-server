@@ -91,6 +91,84 @@ class ProductController {
       return resError(res, "Internal server error", 500);
     }
   }
+
+  /**
+   * @method PUT
+   * @path /api/product/:id
+   * @description Function handle get product by id
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async getProductById(req: Request, res: Response, next: NextFunction) {
+    const productId = req.params.id;
+    try {
+      const product = await Product.findById(productId);
+      if (product) {
+        return resSuccess(res, "Successfully fetch product by id", product);
+      }
+    } catch (error) {
+      return resError(res, "Internal server error", 500);
+    }
+  }
+
+  /**
+   * @method PUT
+   * @path /api/product/:id
+   * @description Function handle update product by id
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async updateProductById(req: Request, res: Response, next: NextFunction) {
+    const productId = req.params.id;
+    const dataUpdated = req.body;
+
+    try {
+      const productUpdated = await Product.findByIdAndUpdate(
+        productId,
+        dataUpdated,
+        {
+          new: true,
+        }
+      );
+
+      return resSuccess(
+        res,
+        "Successfully update product by id",
+        productUpdated
+      );
+    } catch (error) {
+      return resError(res, "Internal server error", 500);
+    }
+  }
+
+    /**
+   * @method DELETE
+   * @path /api/product/:id
+   * @description Function handle update product by id
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async deleteProductById(req: Request, res: Response, next: NextFunction) {
+    const productId = req.params.id;
+
+    try {
+      const productDeleted = await Product.findByIdAndDelete(productId);
+
+      return resSuccess(
+        res,
+        "Successfully delete product by id",
+        productDeleted
+      );
+    } catch (error) {
+      return resError(res, "Internal server error", 500);
+    }
+  }
 }
 
 export default new ProductController();
