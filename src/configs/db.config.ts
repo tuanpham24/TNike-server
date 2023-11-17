@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
-const connect = async (): Promise<void> => {
+const connectDB = async (): Promise<void> => {
   const dbUserName: string | undefined = process.env.DB_USERNAME;
   const dbPassword: string | undefined = process.env.DB_PASSWORD;
   const dbCluster: string | undefined = process.env.DB_CLUSTER;
@@ -23,4 +25,4 @@ const connect = async (): Promise<void> => {
   }
 };
 
-export default connect;
+export default connectDB;
