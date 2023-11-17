@@ -66,6 +66,65 @@ class ProductTypeController {
       return resError(res, "Internal server error", 500);
     }
   }
+
+  /**
+   * @method PUT
+   * @path /api/product-type/:id
+   * @description Function handle update product type by id
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async updateProductTypeById(req: Request, res: Response, next: NextFunction) {
+    const productTypeId = req.params.id;
+    const dataUpdated = req.body;
+
+    try {
+      const productTypeUpdated = await ProductType.findByIdAndUpdate(
+        productTypeId,
+        dataUpdated,
+        {
+          new: true,
+        }
+      );
+
+      return resSuccess(
+        res,
+        "Successfully update product type by id",
+        productTypeUpdated
+      );
+    } catch (error) {
+      return resError(res, "Internal server error", 500);
+    }
+  }
+
+  /**
+   * @method DELETE
+   * @path /api/product-type/:id
+   * @description Function handle update product type by id
+   * @param {*} req
+   * @param {*} res
+   * @param {*} next
+   * @returns
+   */
+  async deleteProductById(req: Request, res: Response, next: NextFunction) {
+    const productTypeId = req.params.id;
+
+    try {
+      const productTypeDeleted = await ProductType.findByIdAndDelete(
+        productTypeId
+      );
+
+      return resSuccess(
+        res,
+        "Successfully delete product type by id",
+        productTypeDeleted
+      );
+    } catch (error) {
+      return resError(res, "Internal server error", 500);
+    }
+  }
 }
 
 export default new ProductTypeController();

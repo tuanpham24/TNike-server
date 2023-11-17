@@ -145,7 +145,7 @@ class ProductController {
     }
   }
 
-    /**
+  /**
    * @method DELETE
    * @path /api/product/:id
    * @description Function handle update product by id
