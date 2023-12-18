@@ -12,9 +12,18 @@ export interface IProduct extends Document {
   price: Number;
   sold_quantity: Number;
   stars: Array<Number>;
+  sale_off: Boolean;
 }
 
 // Product type model
 export interface IProductType extends Document {
   name: String;
+}
+
+// Sale-off product model
+export interface ISaleOffProduct extends Document {
+  product: mongoose.Schema.Types.ObjectId;
+  percent: Number;
+  startSale: Date;
+  endSale: Date;
 }

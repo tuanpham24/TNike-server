@@ -104,9 +104,9 @@ class ProductController {
   async getProductById(req: Request, res: Response, next: NextFunction) {
     const productId = req.params.id;
     try {
-      const product = await Product.findById(productId);
+      const product = await Product.findOne({ _id: productId });
       if (product) {
-        return resSuccess(res, "Successfully fetch product by id", product);
+        return resSuccess(res, "Successfully fetch product by id", { product });
       }
     } catch (error) {
       return resError(res, "Internal server error", 500);
