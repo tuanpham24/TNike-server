@@ -43,6 +43,10 @@ const ProductSchema = new mongoose.Schema<IProduct>(
     stars: {
       type: [Number],
     },
+    sale_off: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamps: true,

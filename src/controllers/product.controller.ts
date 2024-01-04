@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import Product from "../models/product.model";
+import SaleOffProduct from "../models/saleoff-product.model";
 import { resSuccess, resError } from "../services/response-handlers";
 
 class ProductController {
@@ -104,9 +105,23 @@ class ProductController {
   async getProductById(req: Request, res: Response, next: NextFunction) {
     const productId = req.params.id;
     try {
-      const product = await Product.findById(productId);
+      const product = await Product.findOne({ _id: productId }).populate(
+        "type",
+        "name"
+      );
+      
+      let saleOffProduct;
+      if (product?.sale_off) {
+        saleOffProduct = await SaleOffProduct.findOne({product: productId})
+      }
+    
       if (product) {
-        return resSuccess(res, "Successfully fetch product by id", product);
+        let productInfo = {
+          product, 
+          saleOffInfo: saleOffProduct
+        }
+        
+        return resSuccess(res, "Successfully fetch product by id", { productInfo });
       }
     } catch (error) {
       return resError(res, "Internal server error", 500);
