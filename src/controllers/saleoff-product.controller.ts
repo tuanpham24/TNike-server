@@ -32,8 +32,9 @@ class SaleOffProductController {
 
       const newSaleOffProduct = new SaleOffProduct(saleOffProductData);
       await newSaleOffProduct.save();
-      const productSaleOff = await Product.findOne({_id: product})
-      await productSaleOff?.updateOne({sale_off: true})
+
+      const productSaleOff = await Product.findOne({ _id: product });
+      await productSaleOff?.updateOne({ sale_off: true });
 
       return resSuccess(
         res,
@@ -45,11 +46,18 @@ class SaleOffProductController {
     }
   }
 
+  /**
+   * @method GET
+   * @path /api/saleoff-product/
+   * @description Function handle get saleoff product list
+   * @param req
+   * @param res
+   * @param next
+   */
   async getSaleOffProductList(req: Request, res: Response, next: NextFunction) {
     try {
-      const saleOfProductList: Array<typeof SaleOffProduct> = await SaleOffProduct.find(
-        {}
-      ).populate("product");
+      const saleOfProductList: Array<typeof SaleOffProduct> =
+        await SaleOffProduct.find({}).populate("product");
 
       if (saleOfProductList) {
         const results = saleOfProductList.length;
@@ -62,6 +70,27 @@ class SaleOffProductController {
       return resError(res, "Internal server error", 500);
     }
   }
+
+    /**
+   * @method GET
+   * @path /api/saleoff-product/:product_id
+   * @description Function handle get saleoff product by id
+   * @param req
+   * @param res
+   * @param next
+   */
+    async getSaleOffInfoByProductId(req: Request, res: Response, next: NextFunction) {
+      const productId = req.params.product_id;
+      try {
+        const saleOfInfo = await SaleOffProduct.findOne({ product: productId });
+        
+        if (saleOfInfo) {
+          return resSuccess(res, "Successfully fetch sale-off info by product id", { saleOfInfo });
+        }
+      } catch (error) {
+        return resError(res, "Internal server error", 500);
+      }
+    }
 }
 
 export default new SaleOffProductController();
