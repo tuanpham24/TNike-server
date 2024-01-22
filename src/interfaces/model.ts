@@ -27,3 +27,13 @@ export interface ISaleOffProduct extends Document {
   startSale: Date;
   endSale: Date;
 }
+
+// User model
+export interface IUser extends Document {
+  fullname: String;
+  phone: String;
+  email: String;
+  address: String;
+  dateOfBirth: Date;
+  password: String;
+}
